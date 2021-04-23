@@ -28,6 +28,8 @@ bool NodeLessThan::operator()(const CNodeCombinedStats &left, const CNodeCombine
         return pLeft->nodeid < pRight->nodeid;
     case PeerTableModel::Address:
         return pLeft->addrName.compare(pRight->addrName) < 0;
+    case PeerTableModel::Direction:
+        return pLeft->fInbound > pRight->fInbound; // default sort Inbound, then Outbound
     case PeerTableModel::ConnectionType:
         return pLeft->m_conn_type < pRight->m_conn_type;
     case PeerTableModel::Network:
@@ -161,8 +163,9 @@ QVariant PeerTableModel::data(const QModelIndex &index, int role) const
         case NetNodeId:
             return (qint64)rec->nodeStats.nodeid;
         case Address:
-            // prepend to peer address down-arrow symbol for inbound connection and up-arrow for outbound connection
-            return QString(rec->nodeStats.fInbound ? "↓ " : "↑ ") + QString::fromStdString(rec->nodeStats.addrName);
+            return QString::fromStdString(rec->nodeStats.addrName);
+        case Direction:
+            return QString(rec->nodeStats.fInbound ? "Inbound" : "Outbound");
         case ConnectionType:
             return GUIUtil::ConnectionTypeToQString(rec->nodeStats.m_conn_type, /* prepend_direction */ false);
         case Network:
@@ -182,6 +185,7 @@ QVariant PeerTableModel::data(const QModelIndex &index, int role) const
         case NetNodeId:
         case Address:
             return {};
+        case Direction:
         case ConnectionType:
         case Network:
             return QVariant(Qt::AlignCenter);
