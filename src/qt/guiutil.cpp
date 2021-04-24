@@ -706,11 +706,12 @@ QString formatServicesStr(quint64 mask)
     for (const auto& flag : serviceFlagsToStr(mask)) {
         strList.append(QString::fromStdString(flag));
     }
+    sortLocaleAware(strList);
 
     if (strList.size())
-        return strList.join(" & ");
+        return strList.join(QObject::tr(" & ", "Latin word et, which means 'and'."));
     else
-        return QObject::tr("None");
+        return QObject::tr("None", "absence of value");
 }
 
 QString formatPingTime(std::chrono::microseconds ping_time)
