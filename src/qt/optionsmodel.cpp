@@ -169,6 +169,12 @@ void OptionsModel::Init(bool resetSettings)
     }
     m_use_embedded_monospaced_font = settings.value("UseEmbeddedMonospacedFont").toBool();
     Q_EMIT useEmbeddedMonospacedFontChanged(m_use_embedded_monospaced_font);
+
+    if (!settings.contains("UseEmbeddedDyslexicFont")) {
+        settings.setValue("UseEmbeddedDyslexicFont", "true");
+    }
+    m_use_embedded_dyslexic_font = settings.value("UseEmbeddedDyslexicFont").toBool();
+    Q_EMIT useEmbeddedDyslexicFontChanged(m_use_embedded_dyslexic_font);
 }
 
 /** Helper function to copy contents from one QSettings to another.
@@ -334,6 +340,8 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return settings.value("language");
         case UseEmbeddedMonospacedFont:
             return m_use_embedded_monospaced_font;
+        case UseEmbeddedDyslexicFont:
+            return m_use_embedded_dyslexic_font;
         case CoinControlFeatures:
             return fCoinControlFeatures;
         case Prune:
@@ -465,6 +473,11 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             m_use_embedded_monospaced_font = value.toBool();
             settings.setValue("UseEmbeddedMonospacedFont", m_use_embedded_monospaced_font);
             Q_EMIT useEmbeddedMonospacedFontChanged(m_use_embedded_monospaced_font);
+            break;
+        case UseEmbeddedDyslexicFont:
+            m_use_embedded_dyslexic_font = value.toBool();
+            settings.setValue("UseEmbeddedDyslexicFont", m_use_embedded_dyslexic_font);
+            Q_EMIT useEmbeddedDyslexicFontChanged(m_use_embedded_dyslexic_font);
             break;
         case CoinControlFeatures:
             fCoinControlFeatures = value.toBool();

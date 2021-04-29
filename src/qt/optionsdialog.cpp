@@ -149,6 +149,7 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     embedded_font.setWeight(QFont::Bold);
     ui->embeddedFont_label_1->setFont(embedded_font);
     ui->embeddedFont_label_9->setFont(embedded_font);
+    QFont embedded_dyslexic_font{GUIUtil::fixedPitchFont(true)};
 
     QFont system_font{GUIUtil::fixedPitchFont(false)};
     ui->systemFont_radioButton->setText(ui->systemFont_radioButton->text().arg(QFontInfo(system_font).family()));
@@ -157,6 +158,8 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     ui->systemFont_label_9->setFont(system_font);
     // Checking the embeddedFont_radioButton automatically unchecks the systemFont_radioButton.
     ui->systemFont_radioButton->setChecked(true);
+
+    ui->embeddedDyslexicFont_checkBox->setChecked(false);
 
     GUIUtil::handleCloseWindowShortcut(this);
 }
@@ -261,6 +264,7 @@ void OptionsDialog::setMapper()
     mapper->addMapping(ui->unit, OptionsModel::DisplayUnit);
     mapper->addMapping(ui->thirdPartyTxUrls, OptionsModel::ThirdPartyTxUrls);
     mapper->addMapping(ui->embeddedFont_radioButton, OptionsModel::UseEmbeddedMonospacedFont);
+    mapper->addMapping(ui->embeddedDyslexicFont_checkBox, OptionsModel::UseEmbeddedDyslexicFont);
 }
 
 void OptionsDialog::setOkButtonState(bool fState)

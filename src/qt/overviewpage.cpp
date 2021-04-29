@@ -338,3 +338,25 @@ void OverviewPage::setMonospacedFont(bool use_embedded_font)
     ui->labelWatchImmature->setFont(f);
     ui->labelWatchTotal->setFont(f);
 }
+
+void OverviewPage::setDyslexicFont(bool use_embedded_font, bool use_embedded_dyslexic_font)
+{
+
+    if (use_embedded_dyslexic_font)
+    {
+    QFont f = GUIUtil::fixedPitchFont(use_embedded_dyslexic_font);
+    }
+    if (use_embedded_font)
+    {
+    QFont f = GUIUtil::fixedPitchFont(use_embedded_font);
+    f.setWeight(QFont::Bold);
+    ui->labelBalance->setFont(f);
+    ui->labelUnconfirmed->setFont(f);
+    ui->labelImmature->setFont(f);
+    ui->labelTotal->setFont(f);
+    ui->labelWatchAvailable->setFont(f);
+    ui->labelWatchPending->setFont(f);
+    ui->labelWatchImmature->setFont(f);
+    ui->labelWatchTotal->setFont(f);
+    }
+}

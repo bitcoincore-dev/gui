@@ -1,4 +1,4 @@
-<!DOCTYPE RCC><RCC version="1.0">
+<RCC>
     <qresource prefix="/icons">
         <file alias="bitcoin">res/icons/bitcoin.png</file>
         <file alias="address-book">res/icons/address-book.png</file>
@@ -85,5 +85,7 @@
     </qresource>
     <qresource prefix="/fonts">
         <file alias="monospace">res/fonts/RobotoMono-Bold.ttf</file>
+        <file alias="dyslexic-regular">res/fonts/OpenDyslexic-Regular.otf</file>
+        <file alias="dyslexic-bold">res/fonts/OpenDyslexic-Bold.otf</file>
     </qresource>
 </RCC>

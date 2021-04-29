@@ -489,6 +489,8 @@ int GuiMain(int argc, char* argv[])
 
     BitcoinApplication app;
     QFontDatabase::addApplicationFont(":/fonts/monospace");
+    QFontDatabase::addApplicationFont(":/fonts/dyslexic-regular");
+    QFontDatabase::addApplicationFont(":/fonts/dyslexic-bold");
 
     /// 2. Parse command-line options. We do this after qt in order to show an error if there are problems parsing these
     // Command-line options take precedence:
