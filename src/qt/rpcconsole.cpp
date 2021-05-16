@@ -634,6 +634,15 @@ void RPCConsole::setClientModel(ClientModel *model, int bestblock_height, int64_
         ui->peerWidget->setColumnWidth(PeerTableModel::Subversion, SUBVERSION_COLUMN_WIDTH);
         ui->peerWidget->setColumnWidth(PeerTableModel::Ping, PING_COLUMN_WIDTH);
         ui->peerWidget->horizontalHeader()->setStretchLastSection(true);
+        ui->peerWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+        ui->peerWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+        ui->peerWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+        ui->peerWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+        ui->peerWidget->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
+        ui->peerWidget->horizontalHeader()->setSectionResizeMode(5, QHeaderView::ResizeToContents);
+        ui->peerWidget->horizontalHeader()->setSectionResizeMode(6, QHeaderView::ResizeToContents);
+        ui->peerWidget->horizontalHeader()->setSectionResizeMode(7, QHeaderView::ResizeToContents);
+        ui->peerWidget->horizontalHeader()->setSectionResizeMode(8, QHeaderView::ResizeToContents);
 
         // create peer table context menu
         peersTableContextMenu = new QMenu(this);
@@ -657,6 +666,9 @@ void RPCConsole::setClientModel(ClientModel *model, int bestblock_height, int64_
         ui->banlistWidget->setColumnWidth(BanTableModel::Address, BANSUBNET_COLUMN_WIDTH);
         ui->banlistWidget->setColumnWidth(BanTableModel::Bantime, BANTIME_COLUMN_WIDTH);
         ui->banlistWidget->horizontalHeader()->setStretchLastSection(true);
+        ui->banlistWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+        ui->banlistWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+        ui->banlistWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
 
         // create ban table context menu
         banTableContextMenu = new QMenu(this);
@@ -1165,6 +1177,7 @@ void RPCConsole::banSelectedNode(int bantime)
     }
     clearSelectedNode();
     clientModel->getBanTableModel()->refresh();
+    ui->banlistWidget->resizeColumnsToContents();
 }
 
 void RPCConsole::unbanSelectedNode()
