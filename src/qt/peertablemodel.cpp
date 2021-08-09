@@ -71,9 +71,11 @@ QVariant PeerTableModel::data(const QModelIndex& index, int role) const
         switch (column) {
         case NetNodeId:
             return (qint64)rec->nodeStats.nodeid;
+        case Direction:
+            return QString::fromStdString((rec->nodeStats.fInbound ? "↓" : "↑"));
         case Address:
             // prepend to peer address down-arrow symbol for inbound connection and up-arrow for outbound connection
-            return QString::fromStdString((rec->nodeStats.fInbound ? "↓ " : "↑ ") + rec->nodeStats.addrName);
+            return QString::fromStdString(rec->nodeStats.addrName);
         case ConnectionType:
             return GUIUtil::ConnectionTypeToQString(rec->nodeStats.m_conn_type, /* prepend_direction */ false);
         case Network:
@@ -92,6 +94,8 @@ QVariant PeerTableModel::data(const QModelIndex& index, int role) const
         switch (column) {
         case NetNodeId:
             return QVariant(Qt::AlignRight | Qt::AlignVCenter);
+        case Direction:
+            return QVariant(Qt::AlignCenter);
         case Address:
             return {};
         case ConnectionType:
