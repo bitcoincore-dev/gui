@@ -593,6 +593,24 @@ int GuiMain(int argc, char* argv[])
             QObject::tr("Error: Specified data directory \"%1\" does not exist.").arg(QString::fromStdString(gArgs.GetArg("-datadir", ""))));
         return EXIT_FAILURE;
     }
+    if (!gArgs.ReadConfigFiles(error, true)) {
+        InitError(strprintf(Untranslated("Error reading configuration file: %s\n"), error));
+        QMessageBox::critical(nullptr, PACKAGE_NAME,
+            QObject::tr("Error: Cannot parse configuration file: %1.").arg(QString::fromStdString(error)));
+        return EXIT_FAILURE;
+    }
+
+    /// 7. Determine network (and switch to network specific options)
+    // - Do not call Params() before this step
+    // - Do this after parsing the configuration file, as the network can be switched there
+    // - QSettings() will use the new application name after this, resulting in network-specific settings
+    // - Needs to be done before createOptionsModel
+
+    QSettings settings;
+    std::string chain = settings.value("chain", "main").toString().toStdString();
+    gArgs.SoftSetArg("-chain", chain);
+
+    // Check for chain settings (Params() calls are only valid after this clause)
     try {
         /// 6b. Parse bitcoin.conf
         /// - Do not call gArgs.GetDataDirNet() before this step finishes
