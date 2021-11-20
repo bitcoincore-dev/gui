@@ -866,7 +866,7 @@ void RPCConsole::clear(bool keep_prompt)
     }
 
     // Set default style sheet
-    QFontInfo fixedFontInfo(GUIUtil::fixedPitchFont());
+    QFontInfo fixedFontInfo(GUIUtil::fixedPitchFont(true));
     ui->messagesWidget->document()->setDefaultStyleSheet(
         QString(
                 "table { }"
