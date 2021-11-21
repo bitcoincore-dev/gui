@@ -39,9 +39,9 @@ void MempoolStats::drawChart()
     m_scene->clear();
 
     //
-    qreal current_x = GRAPH_PADDING_LEFT;
-    const qreal bottom = m_gfx_view->scene()->sceneRect().height();//-GRAPH_PADDING_BOTTOM;
-    const qreal maxheight_g = (m_gfx_view->scene()->sceneRect().height());//-GRAPH_PADDING_TOP-GRAPH_PADDING_TOP_LABEL-GRAPH_PADDING_BOTTOM);
+    qreal current_x = GRAPH_PADDING_LEFT;//30+30
+    const qreal bottom = m_gfx_view->scene()->sceneRect().height()-GRAPH_PADDING_BOTTOM;
+    const qreal maxheight_g = (m_gfx_view->scene()->sceneRect().height()-GRAPH_PADDING_TOP-GRAPH_PADDING_TOP_LABEL-GRAPH_PADDING_BOTTOM);
 
 
     std::vector<QPainterPath> fee_paths;
@@ -56,14 +56,6 @@ void MempoolStats::drawChart()
     {
         // we are going to access the clientmodel feehistogram directly avoding a copy
         QMutexLocker locker(&m_clientmodel->m_mempool_locker);
-
-        /* TODO: remove
-           helpful for testing/development (loading a prestored dataset)
-        */
-        //FILE *filestr = fsbridge::fopen("/tmp/statsdump", "rb");
-        //CAutoFile file(filestr, SER_DISK, CLIENT_VERSION);
-        //file >> m_clientmodel->m_mempool_feehist;
-        //file.fclose();
 
         size_t max_txcount_graph=0;
 
@@ -115,8 +107,8 @@ void MempoolStats::drawChart()
             tx_count_grid_path.lineTo(GRAPH_PADDING_LEFT+maxwidth, lY);
 
             size_t grid_tx_count = (float)i*(max_txcount_graph-bottomTxCount)/(amount_of_h_lines-1) + bottomTxCount;
-            QGraphicsTextItem *item_tx_count = m_scene->addText(QString::number(grid_tx_count), gridFont);
-            item_tx_count->setPos(GRAPH_PADDING_LEFT+maxwidth, lY-(item_tx_count->boundingRect().height()/2));
+            //QGraphicsTextItem *item_tx_count = m_scene->addText(QString::number(grid_tx_count), gridFont);
+            //item_tx_count->setPos(GRAPH_PADDING_LEFT+maxwidth, lY-(item_tx_count->boundingRect().height()/2));
         }
 
         QPen gridPen(QColor(57,59,69, 200), 0.75, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -124,12 +116,12 @@ void MempoolStats::drawChart()
 
 
         // draw fee ranges;
-        QGraphicsTextItem *fee_range_title = m_scene->addText("Fee ranges\n(sat/b)", gridFont);
-        fee_range_title->setPos(2, bottom+10);
+        //QGraphicsTextItem *fee_range_title = m_scene->addText("Fee ranges\n(sat/b)", gridFont);
+        //fee_range_title->setPos(2, bottom+10);
 
         qreal c_y = bottom;
         const qreal c_w = 10;
-        const qreal c_h = 20;//10;
+        const qreal c_h = 10;
         const qreal c_margin = 2;
         c_y-=c_margin;
         int i = 0;
@@ -139,7 +131,9 @@ void MempoolStats::drawChart()
             }
             ClickableRectItem *fee_rect = new ClickableRectItem();
                             //(L,   B,   R, Top)
-            fee_rect->setRect(10, c_y-7, c_w+100, c_h);
+            //fee_rect->setRect(10, c_y-7, c_w+100, c_h);
+                                //neg moves it up
+            fee_rect->setRect(0, c_y-7, c_w, c_h);
 
             //Stack of rects on left
 
@@ -175,27 +169,20 @@ void MempoolStats::drawChart()
                 }
                 drawChart();
 
-                /*TODO remove
-                  store the existing feehistory to a temporary file
-                */
-                //FILE *filestr = fsbridge::fopen("/tmp/statsdump", "wb");
-                //CAutoFile file(filestr, SER_DISK, CLIENT_VERSION);
-                //file << m_clientmodel->m_mempool_feehist;
-                //file.fclose();
             });
             //m_scene->addItem(fee_rect);
 
             //TODO: fix bug/crash on click
-            QGraphicsTextItem *fee_text = m_scene->addText("fee_text", gridFont);
-            fee_text->setPlainText(QString::number(list_entry.fee_from)+"-"+QString::number(list_entry.fee_to));
+            //QGraphicsTextItem *fee_text = m_scene->addText("fee_text", gridFont);
+            //fee_text->setPlainText(QString::number(list_entry.fee_from)+"-"+QString::number(list_entry.fee_to));
             //if (i+1 == static_cast<int>(m_clientmodel->m_mempool_feehist[0].second.size())) {
-            if (i == static_cast<int>(m_clientmodel->m_mempool_feehist[0].second.size())) {
-                fee_text->setPlainText(QString::number(list_entry.fee_from)+"+");
-            }
-            fee_text->setFont(gridFont);
-            fee_text->setPos(4+c_w-7, c_y-7);
-            m_scene->addItem(fee_text);
-            m_scene->addItem(fee_rect);
+            //if (i == static_cast<int>(m_clientmodel->m_mempool_feehist[0].second.size())) {
+              //  fee_text->setPlainText(QString::number(list_entry.fee_from)+"+");
+            //}
+            //fee_text->setFont(gridFont);
+            //fee_text->setPos(4+c_w-7, c_y-7);
+            //m_scene->addItem(fee_text);
+            //m_scene->addItem(fee_rect);
 
             c_y-=c_h+c_margin;
             i++;
@@ -254,8 +241,8 @@ void MempoolStats::drawChart()
         i++;
     }
 
-    QGraphicsTextItem *item_tx_count = m_scene->addText(total_text, gridFont);
-    item_tx_count->setPos(GRAPH_PADDING_LEFT+(maxwidth/2), bottom);
+    //QGraphicsTextItem *item_tx_count = m_scene->addText(total_text, gridFont);
+    //item_tx_count->setPos(GRAPH_PADDING_LEFT+(maxwidth/2), bottom);
 
 }//end drawChart()
 
