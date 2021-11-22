@@ -867,7 +867,7 @@ void RPCConsole::clear(bool keep_prompt)
     }
 
     // Set default style sheet
-#ifdef __APPLE__
+#ifdef Q_OS_MAC
     QFontInfo fixedFontInfo(GUIUtil::fixedPitchFont(/*use_embedded_font=*/true));
 #else
     QFontInfo fixedFontInfo(GUIUtil::fixedPitchFont());
@@ -1349,11 +1349,11 @@ QString RPCConsole::tabTitle(TabTypes tab_type) const
 QKeySequence RPCConsole::tabShortcut(TabTypes tab_type) const
 {
     switch (tab_type) {
-    case TabTypes::INFO: return QKeySequence(Qt::CTRL + Qt::Key_I);
-    case TabTypes::CONSOLE: return QKeySequence(Qt::CTRL + Qt::Key_T);
-    case TabTypes::MEMPOOL: return QKeySequence(Qt::CTRL + Qt::Key_M);
-    case TabTypes::GRAPH: return QKeySequence(Qt::CTRL + Qt::Key_N);
-    case TabTypes::PEERS: return QKeySequence(Qt::CTRL + Qt::Key_P);
+    case TabTypes::INFO: return QKeySequence(Qt::CTRL + Qt::Key_1);
+    case TabTypes::CONSOLE: return QKeySequence(Qt::CTRL + Qt::Key_2);
+    case TabTypes::MEMPOOL: return QKeySequence(Qt::CTRL + Qt::Key_3);
+    case TabTypes::GRAPH: return QKeySequence(Qt::CTRL + Qt::Key_4);
+    case TabTypes::PEERS: return QKeySequence(Qt::CTRL + Qt::Key_5);
     } // no default case, so the compiler can warn about missing cases
 
     assert(false);

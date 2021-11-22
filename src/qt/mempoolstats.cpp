@@ -176,14 +176,15 @@ void MempoolStats::drawChart()
 
         // calculate the x axis step per sample
         // we ignore the time difference of collected samples due to locking issues
-        //                   //scalar
         const qreal x_increment = 1.0 * (width()-GRAPH_PADDING_LEFT-GRAPH_PADDING_RIGHT) / m_clientmodel->m_mempool_max_samples; //540/clientmodel.h
+		LogPrintf("x_increment = %s\n",x_increment);
 
         // draw the paths
         bool first = true;
         for (const ClientModel::mempool_feehist_sample& sample : m_clientmodel->m_mempool_feehist)
         {
             current_x += x_increment;
+			LogPrintf("current_x = %s\n",current_x);
             int i = 0;
             qreal y = bottom;
             for (const interfaces::mempool_feeinfo& list_entry : sample.second)
@@ -231,6 +232,7 @@ void MempoolStats::drawChart()
         }
         QPen pen_blue(pen_color, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
         m_scene->addPath(feepath, pen_blue, QBrush(brush_color));
+		//LogPrintf("i = %s\n",i);
         i++;
     }
 
@@ -254,6 +256,11 @@ void MempoolStats::resizeEvent(QResizeEvent *event)
                 rect().height()/2
             )
         );
+	LogPrintf("rect().left()/2 = %s\n",rect().left()/2);
+	LogPrintf("rect().top()/1 = %s\n",rect().top()/1);
+	LogPrintf("rect().width()-GRAPH_PADDING_WIDTH = %s\n",rect().width()-GRAPH_PADDING_RIGHT);
+	LogPrintf("rect().width()/2 = %s\n",rect().width()/2);
+	LogPrintf("rect().height()/2 = %s\n",rect().height()/2);
     drawChart();
 }
 

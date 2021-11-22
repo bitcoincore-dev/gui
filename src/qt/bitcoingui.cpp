@@ -966,6 +966,13 @@ void BitcoinGUI::setNetworkActive(bool network_active)
             showDebugWindow();
         });
     m_network_context_menu->addAction(
+        //: A context menu item. The "Mempool tab" is an element of the "Node window".
+        tr("Show Mempool tab"),
+        [this] {
+            rpcConsole->setTabFocus(RPCConsole::TabTypes::MEMPOOL);
+            showDebugWindow();
+        });
+    m_network_context_menu->addAction(
         network_active ?
             //: A context menu item.
             tr("Disable network activity") :
