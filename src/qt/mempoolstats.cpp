@@ -49,7 +49,7 @@ void MempoolStats::drawChart()
     size_t max_txcount=0;
     QFont gridFont;
     gridFont.setPointSize(12);
-	gridFont.setWeight(QFont::Bold);
+    gridFont.setWeight(QFont::Bold);
     int display_up_to_range = 0;
     //let view touch boths sides//we will place an over lay of boxes 
     qreal maxwidth = m_gfx_view->scene()->sceneRect().width()-GRAPH_PADDING_LEFT-GRAPH_PADDING_RIGHT;
@@ -92,10 +92,6 @@ void MempoolStats::drawChart()
             int step = qCeil((1.0*max_txcount/amount_of_h_lines) / stepbase) * stepbase;
             max_txcount_graph = step*amount_of_h_lines;
         }
-
-        // calculate the x axis step per sample
-        // we ignore the time difference of collected samples due to locking issues
-        const qreal x_increment = 1.0 * (width()-GRAPH_PADDING_LEFT-GRAPH_PADDING_RIGHT) / m_clientmodel->m_mempool_max_samples; //samples.size();
 
         // draw horizontal grid
         QPainterPath tx_count_grid_path(QPointF(current_x, bottom));
@@ -140,21 +136,11 @@ void MempoolStats::drawChart()
             QColor brush_color = colors[(i < static_cast<int>(colors.size()) ? i : static_cast<int>(colors.size())-1)];
             //brush_color.setAlpha(100);
             brush_color.setAlpha(100);
-            if (m_selected_range >= 0 && m_selected_range != i) {
+            if (m_selected_range >= 0 && m_selected_range != i)
+            {
                 // if one item is selected, hide out the other ones
                 // fee range boxes
-                //
-                //
-                //
-                //
                 brush_color.setAlpha(70);//not pressed
-                //
-                //
-                //
-                //
-                //
-                //
-                //
             }
 
             fee_rect->setBrush(QBrush(brush_color));
@@ -188,29 +174,36 @@ void MempoolStats::drawChart()
             i++;
         }
 
+        // calculate the x axis step per sample
+        // we ignore the time difference of collected samples due to locking issues
+        //                   //scalar
+        const qreal x_increment = 1.0 * (width()-GRAPH_PADDING_LEFT-GRAPH_PADDING_RIGHT) / m_clientmodel->m_mempool_max_samples; //540/clientmodel.h
+
         // draw the paths
         bool first = true;
-        for (const ClientModel::mempool_feehist_sample& sample : m_clientmodel->m_mempool_feehist) {
+        for (const ClientModel::mempool_feehist_sample& sample : m_clientmodel->m_mempool_feehist)
+        {
             current_x += x_increment;
             int i = 0;
             qreal y = bottom;
-            for (const interfaces::mempool_feeinfo& list_entry : sample.second) {
-                if (i > display_up_to_range) {
+            for (const interfaces::mempool_feeinfo& list_entry : sample.second)
+            {
+                if (i > display_up_to_range)
+                {
                     // skip ranges without txns
                     continue;
                 }
                 y -= (maxheight_g / max_txcount_graph * list_entry.tx_count);
-                if (first) {
-                    // first sample, initiate the path with first point
+                if (first)
+                {
+                // first sample, initiate the path with first point
                     fee_paths.emplace_back(QPointF(current_x, y));
                 }
-                else {
-                    fee_paths[i].lineTo(current_x, y);
-                }
+                else { fee_paths[i].lineTo(current_x, y); }
                 i++;
             }
             first = false;
-        }
+        }//end for loop
     } // release lock for the actual drawing
 
     int i = 0;
@@ -226,7 +219,7 @@ void MempoolStats::drawChart()
         }
         QColor pen_color = colors[(i < static_cast<int>(colors.size()) ? i : static_cast<int>(colors.size())-1)];
         QColor brush_color = pen_color;
-        //mempool paths 
+        //mempool paths
         pen_color.setAlpha(100);
         brush_color.setAlpha(90);
         if (m_selected_range >= 0 && m_selected_range != i) {
