@@ -55,6 +55,7 @@ private:
 
     virtual void resizeEvent(QResizeEvent* event) override;
     virtual void showEvent(QShowEvent* event) override;
+	virtual void mouseMoveEvent(QMouseEvent *event) override;
 
     int m_selected_range = -1;
 };

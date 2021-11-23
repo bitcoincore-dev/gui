@@ -17,6 +17,7 @@ MempoolStats::MempoolStats(QWidget *parent) : QWidget(parent)
         parent->installEventFilter(this);
         raise();
     }
+    setMouseTracking(true);
 
     // autoadjust font size
     QGraphicsTextItem testText("jY"); //screendesign expected 27.5 pixel in width for this string
@@ -326,4 +327,11 @@ void MempoolStats::setClientModel(ClientModel *model)
 
 void ClickableTextItem::mousePressEvent(QGraphicsSceneMouseEvent *event) { Q_EMIT objectClicked(this); }
 void ClickableRectItem::mousePressEvent(QGraphicsSceneMouseEvent *event) { Q_EMIT objectClicked(this); }
+void MempoolStats::mouseMoveEvent(QMouseEvent *event){
 
+                if (MEMPOOL_DEBUG){
+                    LogPrintf( "x() = %s\n",x() );
+                    LogPrintf( "y() = %s\n",y() );
+                }
+
+}
