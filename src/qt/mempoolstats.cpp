@@ -49,7 +49,7 @@ void MempoolStats::drawHorzLines(
         //TODO: use text rect width to adjust
         tx_count_grid_path.moveTo(LEFT_MARGIN+GRAPH_PADDING_LEFT-0, lY);
         //tx_count_grid_path.lineTo(GRAPH_PADDING_LEFT+maxwidth, lY);
-        tx_count_grid_path.lineTo(LEFT_MARGIN+GRAPH_PADDING_LEFT, lY);
+        tx_count_grid_path.lineTo(LEFT_MARGIN+GRAPH_PADDING_LEFT+maxwidth, lY);
 
         size_t grid_tx_count =
             (float)i*(max_txcount_graph-bottomTxCount)/(amount_of_h_lines-1) + bottomTxCount;
@@ -177,7 +177,7 @@ void MempoolStats::drawChart()
     gridFont.setPointSize(12);
 	gridFont.setWeight(QFont::Bold);
     int display_up_to_range = 0;
-    //let view touch boths sides//we will place an over lay of boxes 
+    //TODO: make calc maxwidth better
     qreal maxwidth = m_gfx_view->scene()->sceneRect().width()-GRAPH_PADDING_LEFT-GRAPH_PADDING_RIGHT;
     {
         // we are going to access the clientmodel feehistogram directly avoding a copy
