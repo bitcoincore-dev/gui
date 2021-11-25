@@ -59,7 +59,7 @@ void MempoolStats::drawHorzLines(
             m_scene->addText(QString::number(grid_tx_count)+QString(" vB"), LABELFONT);
         //item_tx_count->setPos(GRAPH_PADDING_LEFT+maxwidth, lY-(item_tx_count->boundingRect().height()/2));
         //TODO: use text rect width to adjust
-        item_tx_count->setPos(GRAPH_PADDING_LEFT-0, lY-(item_tx_count->boundingRect().height()/2));
+        item_tx_count->setPos(LEFT_MARGIN, lY-(item_tx_count->boundingRect().height()/2));
     }
 
 QPen gridPen(QColor(57,59,69, 200), 0.75, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
