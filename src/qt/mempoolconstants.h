@@ -6,7 +6,7 @@ static int LABEL_KV_SIZE = 12;
 
 static const int LEFT_MARGIN             = 10;// LEFT_MARGIN + #.# vB -- //
 static const int RIGHT_MARGIN            = 0;
-static const int GRAPH_PADDING_LEFT      = 0+LEFT_MARGIN;
+static const int GRAPH_PADDING_LEFT      = 60;
 static const int GRAPH_PADDING_RIGHT     = 0;//+RIGHT_MARGIN;
 static const int GRAPH_PADDING_TOP       = 0;
 static const int GRAPH_PADDING_TOP_LABEL = 0;
