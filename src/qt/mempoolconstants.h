@@ -1,16 +1,18 @@
+#include <qt/guiutil.h>
 #include <qt/mempoolstats.h>
 
 static const char *LABEL_FONT = "Roboto Mono";
 static int LABEL_TITLE_SIZE = 22;
 static int LABEL_KV_SIZE = 12;
 
-static const int LEFT_MARGIN             = 10;// LEFT_MARGIN + #.# vB -- //
-static const int RIGHT_MARGIN            = 10;
-static const int GRAPH_PADDING_LEFT      = 60;
-static const int GRAPH_PADDING_RIGHT     = RIGHT_MARGIN;
-static const int GRAPH_PADDING_TOP       = 0;
-static const int GRAPH_PADDING_TOP_LABEL = 0;
-static const int GRAPH_PADDING_BOTTOM    = 0;
+static const int DEFAULT_MARGIN          = 10;
+static const int LEFT_MARGIN             = DEFAULT_MARGIN;
+static const int RIGHT_MARGIN            = DEFAULT_MARGIN;
+static const int GRAPH_PADDING_LEFT      = 60;//Make space for fee range
+static const int GRAPH_PADDING_RIGHT     = DEFAULT_MARGIN;
+static const int GRAPH_PADDING_TOP       = DEFAULT_MARGIN + 50;
+static const int GRAPH_PADDING_TOP_LABEL = DEFAULT_MARGIN;
+static const int GRAPH_PADDING_BOTTOM    = DEFAULT_MARGIN + 50;
 
 const static std::vector<QColor> colors = {
 
@@ -44,3 +46,6 @@ QColor(10, 77,64,255),  //600-650
 QColor(33, 93,35,255),  //700-750
 
 };
+
+#define MEMPOOL_GRAPH_LOGGING_BEGIN(X) LogPrintf("\n\n\nBEGIN %s Logging\n\n",X)
+#define MEMPOOL_GRAPH_LOGGING_END(X) LogPrintf("\n\n\nEND %s Logging\n\n",X)
