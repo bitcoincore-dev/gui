@@ -59,11 +59,16 @@ MEMPOOL_GRAPH_LOGGING_END(__func__);
         qreal lY = bottom-i*(maxheight_g/(amount_of_h_lines-1));
         LogPrintf("lY = %s\n",lY);
         //TODO: use text rect width to adjust
-        tx_count_grid_path.moveTo(LEFT_MARGIN+GRAPH_PADDING_LEFT-0, lY);
-        LogPrintf("LEFT_MARGIN+GRAPH_PADDING_LEFT-0 = %s\n",LEFT_MARGIN+GRAPH_PADDING_LEFT-0);
+        //
+        //tx_count_grid_path.moveTo(LEFT_MARGIN+GRAPH_PADDING_LEFT, lY);
+        tx_count_grid_path.moveTo(INITIAL_X, lY);
+        //LogPrintf("LEFT_MARGIN+GRAPH_PADDING_LEFT = %s\n",LEFT_MARGIN+GRAPH_PADDING_LEFT);
+        LogPrintf("INITIAL_X = %s\n",INITIAL_X);
         //tx_count_grid_path.lineTo(GRAPH_PADDING_LEFT+maxwidth, lY);
-        tx_count_grid_path.lineTo(LEFT_MARGIN+GRAPH_PADDING_LEFT+maxwidth, lY);
-        LogPrintf("LEFT_MARGIN+GRAPH_PADDING_LEFT+maxwidth = %s\n",LEFT_MARGIN+GRAPH_PADDING_LEFT+maxwidth);
+        //tx_count_grid_path.lineTo(maxwidth - (LEFT_MARGIN-GRAPH_PADDING_LEFT), lY);
+        tx_count_grid_path.lineTo(maxwidth - (INITIAL_X), lY);
+        //LogPrintf("LEFT_MARGIN+GRAPH_PADDING_LEFT+maxwidth = %s\n",LEFT_MARGIN+GRAPH_PADDING_LEFT+maxwidth);
+        LogPrintf("maxwidth - GRAPH_PADDING_LEFT = %s\n",(maxwidth - GRAPH_PADDING_LEFT));
 
         size_t grid_tx_count =
             (float)i*(max_txcount_graph-bottomTxCount)/(amount_of_h_lines-1) + bottomTxCount;
@@ -183,13 +188,23 @@ void MempoolStats::drawChart()
 
     //
     //Set position for drawing the fee paths
-    qreal current_x = 0;//+(LEFT_MARGIN+GRAPH_PADDING_LEFT+RIGHT_MARGIN);//LEFT_MARGIN+GRAPH_PADDING_LEFT;
+    //Set position for drawing the fee paths
+    //Set position for drawing the fee paths
+    //Set position for drawing the fee paths
+    //Set position for drawing the fee paths
+    //Set position for drawing the fee paths
+    qreal current_x = INITIAL_X;//0 + (LEFT_MARGIN+GRAPH_PADDING_LEFT);
+    //Set position for drawing the fee paths
+    //Set position for drawing the fee paths
+    //Set position for drawing the fee paths
+    //Set position for drawing the fee paths
+    //Set position for drawing the fee paths
+    //Set position for drawing the fee paths
+
+
+
     const qreal bottom = m_gfx_view->scene()->sceneRect().height()-GRAPH_PADDING_BOTTOM;
     const qreal maxheight_g = (m_gfx_view->scene()->sceneRect().height() - (GRAPH_PADDING_TOP + GRAPH_PADDING_TOP_LABEL + GRAPH_PADDING_BOTTOM));
-    MEMPOOL_GRAPH_LOGGING_BEGIN(__func__);
-    LogPrintf("current_x = %s", current_x);
-    LogPrintf(" m_gfx_view->scene()->sceneRect().width() = %s ", m_gfx_view->scene()->sceneRect().width() );
-    MEMPOOL_GRAPH_LOGGING_END(__func__);
 
     std::vector<QPainterPath> fee_paths;
     std::vector<size_t> fee_subtotal_txcount;
@@ -200,7 +215,16 @@ void MempoolStats::drawChart()
     int display_up_to_range = 0;
     //TODO: make calc maxwidth better
     //sceneRect().width() minus all L/RIGHT padding and margins
-    qreal maxwidth = m_gfx_view->scene()->sceneRect().width() - (LEFT_MARGIN + GRAPH_PADDING_LEFT + GRAPH_PADDING_RIGHT + RIGHT_MARGIN);
+    qreal maxwidth = m_gfx_view->scene()->sceneRect().width() - (INITIAL_X + GRAPH_PADDING_RIGHT + RIGHT_MARGIN);
+    MEMPOOL_GRAPH_LOGGING_BEGIN(__func__);
+        LogPrintf("current_x = %s", current_x);
+        LogPrintf("bottom = %s", bottom);
+        LogPrintf("maxheight_g = %s", maxheight_g);
+        LogPrintf("max_txcount = %s", max_txcount);
+        LogPrintf("display_up_to_range = %s", display_up_to_range);
+        LogPrintf("m_gfx_view->scene()->sceneRect().width() = %s ", m_gfx_view->scene()->sceneRect().width() );
+        LogPrintf("maxwidth = %s\n",maxwidth);
+    MEMPOOL_GRAPH_LOGGING_END(__func__);
     {
         // we are going to access the clientmodel feehistogram directly avoding a copy
         QMutexLocker locker(&m_clientmodel->m_mempool_locker);
@@ -241,7 +265,7 @@ void MempoolStats::drawChart()
         }
 
         // make a nice y-axis scale
-        const int amount_of_h_lines = 5;
+        const int amount_of_h_lines = 7;
         if (max_txcount > 0) {
             int val = qFloor(log10(1.0*max_txcount/amount_of_h_lines));
             int stepbase = qPow(10.0f, val);
@@ -266,9 +290,10 @@ void MempoolStats::drawChart()
 
             MEMPOOL_GRAPH_LOGGING_BEGIN(__func__);
                 LogPrintf("width() = %s\n",width());
-                LogPrintf("x_increment = %s\n",x_increment);
-                LogPrintf("current_x_bottom.x() = %s\n",current_x_bottom.x());
-                LogPrintf("current_x_bottom.y() = %s\n",current_x_bottom.y());
+                LogPrintf("width() - (LEFT_MARGIN + GRAPH_PADDING_LEFT + GRAPH_PADDING_RIGHT + RIGHT_MARGIN) = %s\n", width() - (LEFT_MARGIN + GRAPH_PADDING_LEFT + GRAPH_PADDING_RIGHT + RIGHT_MARGIN));
+                LogPrintf("x_increment = %s\n", x_increment);
+                LogPrintf("current_x_bottom.x() = %s\n", current_x_bottom.x());
+                LogPrintf("current_x_bottom.y() = %s\n", current_x_bottom.y());
             MEMPOOL_GRAPH_LOGGING_END(__func__);
 
         //TODO: use x_increment in drawHorzLines to draw tiks for time relationships on 0 range line
@@ -280,8 +305,7 @@ void MempoolStats::drawChart()
         // draw the paths
         bool first = true;
         for (const ClientModel::mempool_feehist_sample& sample : m_clientmodel->m_mempool_feehist) {
-            //current_x += x_increment;
-            current_x += 0+GRAPH_PADDING_LEFT;
+            current_x += x_increment;
             int i = 0;
             qreal y = bottom;
             for (const interfaces::mempool_feeinfo& list_entry : sample.second) {
@@ -293,6 +317,8 @@ void MempoolStats::drawChart()
                 if (first) {
                     // first sample, initiate the path with first point
                     fee_paths.emplace_back(QPointF(current_x, y));
+                    LogPrintf("current_x = %s\n", current_x);
+                    LogPrintf("y = %s\n", y);
                 }
                 else {
                     fee_paths[i].lineTo(current_x, y);

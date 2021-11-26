@@ -14,6 +14,10 @@ static const int GRAPH_PADDING_TOP       = DEFAULT_MARGIN + 50;
 static const int GRAPH_PADDING_TOP_LABEL = DEFAULT_MARGIN;
 static const int GRAPH_PADDING_BOTTOM    = DEFAULT_MARGIN + 50;
 
+//We start horz lines here and paths here
+//static const int INITIAL_X               = LEFT_MARGIN + GRAPH_PADDING_LEFT;
+static const int INITIAL_X               = 10 + 60;
+
 const static std::vector<QColor> colors = {
 
 QColor(212,29, 97,255), //0-1
