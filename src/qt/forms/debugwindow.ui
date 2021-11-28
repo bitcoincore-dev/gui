@@ -873,7 +873,17 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="MempoolStats" name="mempool_graph" native="true"/>
+        <widget class="MempoolStats" name="mempool_graph" native="true">
+         <property name="mouseTracking">
+          <bool>true</bool>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(17, 19, 31)</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
