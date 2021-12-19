@@ -15,12 +15,12 @@ static const int     GRAPH_PADDING_BOTTOM        = 50;
 
 static const int     DETAIL_PADDING_LEFT          = 0;
 static const int     DETAIL_PADDING_RIGHT         = 50;
-static const double  DETAIL_VIEW_MIN_WIDTH       = 0.0+DETAIL_PADDING_LEFT+DETAIL_PADDING_RIGHT;
+static const double  DETAIL_VIEW_MIN_WIDTH       = 100.0+DETAIL_PADDING_LEFT+DETAIL_PADDING_RIGHT;
 static const double  DETAIL_VIEW_MAX_WIDTH       = 150.0+DETAIL_PADDING_LEFT+DETAIL_PADDING_RIGHT;
 
-static const int     DETAIL_PADDING_TOP           = 50;
-static const int     DETAIL_PADDING_BOTTOM        = 20;//used to calculate qreal bottom
-static const double  DETAIL_VIEW_MIN_HEIGHT      = 300.0+DETAIL_PADDING_TOP+DETAIL_PADDING_BOTTOM;
+static const int     DETAIL_PADDING_TOP           = 20;
+static const int     DETAIL_PADDING_BOTTOM        = 30;//used to calculate qreal bottom in mempooldetail.cpp
+static const double  DETAIL_VIEW_MIN_HEIGHT      = 400.0+DETAIL_PADDING_TOP+DETAIL_PADDING_BOTTOM;
 static const double  DETAIL_VIEW_MAX_HEIGHT      = 400.0+DETAIL_PADDING_TOP+DETAIL_PADDING_BOTTOM;
 
 bool const MEMPOOL_DETAIL_LOGGING                = false;
