@@ -730,6 +730,38 @@ void RPCConsole::setClientModel(ClientModel *model, int bestblock_height, int64_
         ui->startupTime->setText(model->formatClientStartupTime());
         ui->networkName->setText(QString::fromStdString(Params().GetChainTypeString()));
 
+        if (Params().GetChainTypeString() == "signet") {
+            std::vector<uint8_t> vChallenge = Params().GetConsensus().signet_challenge;
+            std::string challengeString = HexStr(vChallenge);
+            if (challengeString != DEFAULT_CHALLENGE_STRING) {
+                LogDebug(BCLog::QT, "rpcconsole:challengeString=%s\n", challengeString);
+                if (challengeString.length() > 16) { // a sane minimum
+                    std::string challenge_fingerprint = challengeString.substr(0, 8);
+                    const QString title = tr("Node window - [signet] (%1)").arg(QString::fromStdString(challenge_fingerprint));
+                    // display fingerprint in Node window title
+                    this->setWindowTitle(title);
+                } else {
+                    // A trivial challenge is supported. Example: signetchallenge=51
+                    std::string challenge_fingerprint = challengeString.substr(0, challengeString.length());
+                    const QString title = tr("Node window - [signet] (%1)").arg(QString::fromStdString(challenge_fingerprint));
+                    // display fingerprint in Node window title
+                    this->setWindowTitle(title);
+                }
+                if (challengeString.length() > (size_t)ui->networkName->width()) {
+                    challengeString.insert(0, "\n");  // break after Signet:
+                    challengeString.insert(65, "\n"); // then split at (130/2)
+                }
+                ui->networkName->setToolTip(
+                    tr("%1").arg(QString::fromStdString(challengeString)));
+                ui->networkName->setText(
+                    tr("%1\nChallenge: %2").arg("Signet").arg(QString::fromStdString(challengeString)));
+            } else {
+                ui->networkName->setText(tr("Signet: Default"));
+                ui->networkName->setToolTip(QString());
+                this->setWindowTitle(tr("[signet] Default"));
+            }
+        }
+
         //Setup autocomplete and attach it
         QStringList wordList;
         std::vector<std::string> commandList = m_node.listRpcCommands();
